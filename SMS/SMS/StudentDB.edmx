@@ -1,0 +1,559 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SMSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AttendanceRegister">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+            <PropertyRef Name="SchoolDate" />
+          </Key>
+          <Property Name="EnrollmentID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SchoolDate" Type="datetime" Nullable="false" />
+          <Property Name="Status" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="SchoolID" Type="varchar" MaxLength="10" />
+          <Property Name="CourseID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="CourseName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SchoolName" Type="varchar" MaxLength="100" />
+          <Property Name="SchoolAddress" Type="varchar" MaxLength="200" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionID" />
+          </Key>
+          <Property Name="CourseID" Type="varchar" MaxLength="10" />
+          <Property Name="SectionID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SectionName" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="StudentName" Type="varchar" MaxLength="100" />
+          <Property Name="StudentAddress" Type="varchar" MaxLength="200" />
+          <Property Name="SchoolID" Type="varchar" MaxLength="10" />
+          <Property Name="CourseID" Type="varchar" MaxLength="10" />
+          <Property Name="SectionID" Type="varchar" MaxLength="10" />
+          <Property Name="StudentPhoto" Type="varchar" MaxLength="200" />
+          <Property Name="FatherName" Type="varchar" MaxLength="100" />
+          <Property Name="MotherName" Type="varchar" MaxLength="100" />
+          <Property Name="DOB" Type="date" />
+          <Property Name="DOA" Type="date" />
+          <Property Name="FatherMobNo" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="MotherMobNo" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="AlterNateNo" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Gender" Type="varchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="SubjectName" Type="varchar" MaxLength="100" />
+          <Property Name="CourseID" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TeacherName" Type="varchar" MaxLength="100" />
+          <Property Name="TeacherAddress" Type="varchar" MaxLength="100" />
+          <Property Name="Qualification1" Type="varchar" MaxLength="100" />
+          <Property Name="Qualification2" Type="varchar" MaxLength="100" />
+          <Property Name="Qualification3" Type="varchar" MaxLength="100" />
+          <Property Name="Qualification4" Type="varchar" MaxLength="100" />
+          <Property Name="SubjectID" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="fk_Course_CourseID">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Course_SchoolID">
+          <End Role="School" Type="Self.School" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CourseID">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CourseIDSubject">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Subject" Type="Self.Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SchoolID">
+          <End Role="School" Type="Self.School" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SectionID">
+          <End Role="Section" Type="Self.Section" Multiplicity="0..1" />
+          <End Role="Student" Type="Self.Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_StudentIDAttRegister">
+          <End Role="Student" Type="Self.Student" Multiplicity="1" />
+          <End Role="AttendanceRegister" Type="Self.AttendanceRegister" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="EnrollmentID" />
+            </Principal>
+            <Dependent Role="AttendanceRegister">
+              <PropertyRef Name="EnrollmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SubjectIDTeacher">
+          <End Role="Subject" Type="Self.Subject" Multiplicity="0..1" />
+          <End Role="Teacher" Type="Self.Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMSModelStoreContainer">
+          <EntitySet Name="AttendanceRegister" EntityType="Self.AttendanceRegister" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Course" EntityType="Self.Course" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="School" EntityType="Self.School" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Student" EntityType="Self.Student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Subject" EntityType="Self.Subject" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Teacher" EntityType="Self.Teacher" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_Course_CourseID" Association="Self.fk_Course_CourseID">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Section" EntitySet="Section" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Course_SchoolID" Association="Self.fk_Course_SchoolID">
+            <End Role="School" EntitySet="School" />
+            <End Role="Course" EntitySet="Course" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CourseID" Association="Self.fk_CourseID">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CourseIDSubject" Association="Self.fk_CourseIDSubject">
+            <End Role="Course" EntitySet="Course" />
+            <End Role="Subject" EntitySet="Subject" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SchoolID" Association="Self.fk_SchoolID">
+            <End Role="School" EntitySet="School" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SectionID" Association="Self.fk_SectionID">
+            <End Role="Section" EntitySet="Section" />
+            <End Role="Student" EntitySet="Student" />
+          </AssociationSet>
+          <AssociationSet Name="fk_StudentIDAttRegister" Association="Self.fk_StudentIDAttRegister">
+            <End Role="Student" EntitySet="Student" />
+            <End Role="AttendanceRegister" EntitySet="AttendanceRegister" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SubjectIDTeacher" Association="Self.fk_SubjectIDTeacher">
+            <End Role="Subject" EntitySet="Subject" />
+            <End Role="Teacher" EntitySet="Teacher" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SMSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Course">
+          <Key>
+            <PropertyRef Name="CourseID" />
+          </Key>
+          <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CourseName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Sections" Relationship="Self.fk_Course_CourseID" FromRole="Course" ToRole="Section" />
+          <NavigationProperty Name="School" Relationship="Self.fk_Course_SchoolID" FromRole="Course" ToRole="School" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.fk_CourseID" FromRole="Course" ToRole="Student" />
+          <NavigationProperty Name="Subjects" Relationship="SMSModel.fk_CourseIDSubject" FromRole="Course" ToRole="Subject" />
+        </EntityType>
+        <EntityType Name="School">
+          <Key>
+            <PropertyRef Name="SchoolID" />
+          </Key>
+          <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SchoolName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Courses" Relationship="Self.fk_Course_SchoolID" FromRole="School" ToRole="Course" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.fk_SchoolID" FromRole="School" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Section">
+          <Key>
+            <PropertyRef Name="SectionID" />
+          </Key>
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SectionID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SectionName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="Self.fk_Course_CourseID" FromRole="Section" ToRole="Course" />
+          <NavigationProperty Name="Students" Relationship="SMSModel.fk_SectionID" FromRole="Section" ToRole="Student" />
+        </EntityType>
+        <Association Name="fk_Course_CourseID">
+          <End Role="Course" Type="Self.Course" Multiplicity="0..1" />
+          <End Role="Section" Type="Self.Section" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Section">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_Course_SchoolID">
+          <End Role="School" Type="Self.School" Multiplicity="0..1" />
+          <End Role="Course" Type="Self.Course" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="Course">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SMSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Courses" EntityType="Self.Course" />
+          <EntitySet Name="Schools" EntityType="Self.School" />
+          <EntitySet Name="Sections" EntityType="Self.Section" />
+          <AssociationSet Name="fk_Course_CourseID" Association="Self.fk_Course_CourseID">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Section" EntitySet="Sections" />
+          </AssociationSet>
+          <AssociationSet Name="fk_Course_SchoolID" Association="Self.fk_Course_SchoolID">
+            <End Role="School" EntitySet="Schools" />
+            <End Role="Course" EntitySet="Courses" />
+          </AssociationSet>
+          <EntitySet Name="AttendanceRegisters" EntityType="SMSModel.AttendanceRegister" />
+          <EntitySet Name="Students" EntityType="SMSModel.Student" />
+          <EntitySet Name="Subjects" EntityType="SMSModel.Subject" />
+          <EntitySet Name="Teachers" EntityType="SMSModel.Teacher" />
+          <AssociationSet Name="fk_StudentIDAttRegister" Association="SMSModel.fk_StudentIDAttRegister">
+            <End Role="Student" EntitySet="Students" />
+            <End Role="AttendanceRegister" EntitySet="AttendanceRegisters" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CourseID" Association="SMSModel.fk_CourseID">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="fk_CourseIDSubject" Association="SMSModel.fk_CourseIDSubject">
+            <End Role="Course" EntitySet="Courses" />
+            <End Role="Subject" EntitySet="Subjects" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SchoolID" Association="SMSModel.fk_SchoolID">
+            <End Role="School" EntitySet="Schools" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SectionID" Association="SMSModel.fk_SectionID">
+            <End Role="Section" EntitySet="Sections" />
+            <End Role="Student" EntitySet="Students" />
+          </AssociationSet>
+          <AssociationSet Name="fk_SubjectIDTeacher" Association="SMSModel.fk_SubjectIDTeacher">
+            <End Role="Subject" EntitySet="Subjects" />
+            <End Role="Teacher" EntitySet="Teachers" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="AttendanceRegister">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+            <PropertyRef Name="SchoolDate" />
+          </Key>
+          <Property Name="EnrollmentID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Status" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Student" Relationship="SMSModel.fk_StudentIDAttRegister" FromRole="AttendanceRegister" ToRole="Student" />
+        </EntityType>
+        <EntityType Name="Student">
+          <Key>
+            <PropertyRef Name="EnrollmentID" />
+          </Key>
+          <Property Name="EnrollmentID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StudentName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="StudentAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SectionID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="StudentPhoto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="FatherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MotherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="DOB" Type="DateTime" Precision="0" />
+          <Property Name="DOA" Type="DateTime" Precision="0" />
+          <Property Name="FatherMobNo" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="MotherMobNo" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="AlterNateNo" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="AttendanceRegisters" Relationship="SMSModel.fk_StudentIDAttRegister" FromRole="Student" ToRole="AttendanceRegister" />
+          <NavigationProperty Name="Course" Relationship="SMSModel.fk_CourseID" FromRole="Student" ToRole="Course" />
+          <NavigationProperty Name="School" Relationship="SMSModel.fk_SchoolID" FromRole="Student" ToRole="School" />
+          <NavigationProperty Name="Section" Relationship="SMSModel.fk_SectionID" FromRole="Student" ToRole="Section" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Subject">
+          <Key>
+            <PropertyRef Name="SubjectID" />
+          </Key>
+          <Property Name="SubjectID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="SubjectName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="CourseID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Course" Relationship="SMSModel.fk_CourseIDSubject" FromRole="Subject" ToRole="Course" />
+          <NavigationProperty Name="Teachers" Relationship="SMSModel.fk_SubjectIDTeacher" FromRole="Subject" ToRole="Teacher" />
+        </EntityType>
+        <EntityType Name="Teacher">
+          <Key>
+            <PropertyRef Name="TeacherID" />
+          </Key>
+          <Property Name="TeacherID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TeacherAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification3" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Qualification4" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="SubjectID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Subject" Relationship="SMSModel.fk_SubjectIDTeacher" FromRole="Teacher" ToRole="Subject" />
+        </EntityType>
+        <Association Name="fk_StudentIDAttRegister">
+          <End Type="SMSModel.Student" Role="Student" Multiplicity="1" />
+          <End Type="SMSModel.AttendanceRegister" Role="AttendanceRegister" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Student">
+              <PropertyRef Name="EnrollmentID" />
+            </Principal>
+            <Dependent Role="AttendanceRegister">
+              <PropertyRef Name="EnrollmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CourseID">
+          <End Type="SMSModel.Course" Role="Course" Multiplicity="0..1" />
+          <End Type="SMSModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_CourseIDSubject">
+          <End Type="SMSModel.Course" Role="Course" Multiplicity="0..1" />
+          <End Type="SMSModel.Subject" Role="Subject" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Course">
+              <PropertyRef Name="CourseID" />
+            </Principal>
+            <Dependent Role="Subject">
+              <PropertyRef Name="CourseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SchoolID">
+          <End Type="SMSModel.School" Role="School" Multiplicity="0..1" />
+          <End Type="SMSModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="School">
+              <PropertyRef Name="SchoolID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SchoolID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SectionID">
+          <End Type="SMSModel.Section" Role="Section" Multiplicity="0..1" />
+          <End Type="SMSModel.Student" Role="Student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Section">
+              <PropertyRef Name="SectionID" />
+            </Principal>
+            <Dependent Role="Student">
+              <PropertyRef Name="SectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_SubjectIDTeacher">
+          <End Type="SMSModel.Subject" Role="Subject" Multiplicity="0..1" />
+          <End Type="SMSModel.Teacher" Role="Teacher" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Subject">
+              <PropertyRef Name="SubjectID" />
+            </Principal>
+            <Dependent Role="Teacher">
+              <PropertyRef Name="SubjectID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SMSModelStoreContainer" CdmEntityContainer="SMSEntities">
+          <EntitySetMapping Name="Courses">
+            <EntityTypeMapping TypeName="SMSModel.Course">
+              <MappingFragment StoreEntitySet="Course">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Schools">
+            <EntityTypeMapping TypeName="SMSModel.School">
+              <MappingFragment StoreEntitySet="School">
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+                <ScalarProperty Name="SchoolAddress" ColumnName="SchoolAddress" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sections">
+            <EntityTypeMapping TypeName="SMSModel.Section">
+              <MappingFragment StoreEntitySet="Section">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AttendanceRegisters">
+            <EntityTypeMapping TypeName="SMSModel.AttendanceRegister">
+              <MappingFragment StoreEntitySet="AttendanceRegister">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="SchoolDate" ColumnName="SchoolDate" />
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Students">
+            <EntityTypeMapping TypeName="SMSModel.Student">
+              <MappingFragment StoreEntitySet="Student">
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="AlterNateNo" ColumnName="AlterNateNo" />
+                <ScalarProperty Name="MotherMobNo" ColumnName="MotherMobNo" />
+                <ScalarProperty Name="FatherMobNo" ColumnName="FatherMobNo" />
+                <ScalarProperty Name="DOA" ColumnName="DOA" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="MotherName" ColumnName="MotherName" />
+                <ScalarProperty Name="FatherName" ColumnName="FatherName" />
+                <ScalarProperty Name="StudentPhoto" ColumnName="StudentPhoto" />
+                <ScalarProperty Name="SectionID" ColumnName="SectionID" />
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="SchoolID" ColumnName="SchoolID" />
+                <ScalarProperty Name="StudentAddress" ColumnName="StudentAddress" />
+                <ScalarProperty Name="StudentName" ColumnName="StudentName" />
+                <ScalarProperty Name="EnrollmentID" ColumnName="EnrollmentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Subjects">
+            <EntityTypeMapping TypeName="SMSModel.Subject">
+              <MappingFragment StoreEntitySet="Subject">
+                <ScalarProperty Name="CourseID" ColumnName="CourseID" />
+                <ScalarProperty Name="SubjectName" ColumnName="SubjectName" />
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Teachers">
+            <EntityTypeMapping TypeName="SMSModel.Teacher">
+              <MappingFragment StoreEntitySet="Teacher">
+                <ScalarProperty Name="SubjectID" ColumnName="SubjectID" />
+                <ScalarProperty Name="Qualification4" ColumnName="Qualification4" />
+                <ScalarProperty Name="Qualification3" ColumnName="Qualification3" />
+                <ScalarProperty Name="Qualification2" ColumnName="Qualification2" />
+                <ScalarProperty Name="Qualification1" ColumnName="Qualification1" />
+                <ScalarProperty Name="TeacherAddress" ColumnName="TeacherAddress" />
+                <ScalarProperty Name="TeacherName" ColumnName="TeacherName" />
+                <ScalarProperty Name="TeacherID" ColumnName="TeacherID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

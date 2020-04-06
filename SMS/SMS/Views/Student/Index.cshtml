@@ -1,0 +1,108 @@
+﻿@model IEnumerable<SMS.Student>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StudentPhoto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FatherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MotherName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DOA)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.FatherMobNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MotherMobNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AlterNateNo)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Course.SchoolID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.School.SchoolName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Section.CourseID)
+        </th>
+        <th></th>
+    </tr>
+   
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentAddress)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentPhoto)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOB)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherMobNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MotherMobNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AlterNateNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.SchoolID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.School.SchoolName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Section.CourseID)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.EnrollmentID }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.EnrollmentID }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.EnrollmentID })
+                </td>
+            </tr>
+        }
+  
+
+
+</table>

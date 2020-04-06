@@ -1,0 +1,56 @@
+﻿@model IEnumerable<SMS.School>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@Html.Partial("_AlertsMessage")
+
+@*@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })*@
+<a href="@Url.Action("Create")" class="btn btn-primary">
+    <span class="glyphicon glyphicon-plus">Add New</span>
+</a>
+
+@if (Model != null)
+{
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.SchoolName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SchoolAddress)
+                </th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SchoolAddress)
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Edit", "Edit", new { id = item.SchoolID })*@
+                        <a href="@Url.Action("Edit", new { id = item.SchoolID })" class="btn btn-primary">
+                            <span class="glyphicon glyphicon-edit"></span>
+                        </a>
+                    </td>
+                    <td>
+                        @*@Html.ActionLink("Delete", "Delete", new { id = item.SchoolID }, new { onclick = "return confirm('Are you sure to delete the record')" })*@
+                        <a href="@Url.Action("Delete", new { id = item.SchoolID })" class="btn btn-danger" onclick="return confirm('Are you sure to delete the record')">
+                            <span class="glyphicon glyphicon-trash"></span>
+                        </a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+}
+

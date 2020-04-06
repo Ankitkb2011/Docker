@@ -1,0 +1,51 @@
+﻿@using SMS.Models
+
+@{
+    if (Alerts.AlertType != AlertsType.None)
+    {
+        if (Alerts.AlertType == AlertsType.Saved)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-success alert-dismissible fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> Record Saved Successfully
+                </div>
+            </div>
+        }
+        else if (Alerts.AlertType == AlertsType.Updated)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-info  alert-dismissible fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> Record Updated Successfully
+                </div>
+            </div>
+        }
+
+        else if (Alerts.AlertType == AlertsType.Deleted)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-info alert-dismissible fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Success!</strong> Record Deleted Successfully
+                </div>
+            </div>
+        }
+
+        else if (Alerts.AlertType == AlertsType.Error)
+        {
+            <div class="col-md-12">
+                <div class="alert alert-danger alert-dismissible fade in">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <strong>Error!</strong> @Alerts.AlertText
+                </div>
+            </div>
+        }
+
+        Alerts.AlertType = AlertsType.None;
+        Alerts.AlertText = "";
+    }
+}
+
+
+

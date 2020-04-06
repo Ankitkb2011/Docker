@@ -1,0 +1,63 @@
+﻿@model SMS.Course
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div class="col-md-2"></div>
+    <fieldset class="col-md-8">
+        <legend>Update Course</legend>
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <!-- Card -->
+            <div class="card mx-xl-5">
+
+                <!-- Card body -->
+                <div class="card-body">
+                    <!-- Default form subscription -->
+                    <form>
+                        @Html.HiddenFor(model => model.CourseID)
+
+
+
+                        @Html.LabelFor(model => model.SchoolID, "SchoolID", htmlAttributes: new { @class = "control-label" })
+                        @Html.DropDownList("SchoolID", null, "Select School", htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.SchoolID, "", new { @class = "text-danger" })
+
+                        <br />
+
+                        @Html.LabelFor(model => model.CourseName, htmlAttributes: new { @class = "control-label" })
+                        @Html.EditorFor(model => model.CourseName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.CourseName, "", new { @class = "text-danger" })
+
+
+                        <div class="text-center py-4 mt-3">
+                            <input type="submit" value="Save" class="btn btn-default" />
+                            <a href="@Url.Action("Index")" class="btn btn-danger">
+                                Close
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+
+                </div>
+            </div>
+        </div>
+    </fieldset>
+    <div class="col-md-2"></div>
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
